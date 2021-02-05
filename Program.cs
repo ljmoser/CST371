@@ -18,15 +18,15 @@ namespace CST371
             HttpClient client = new HttpClient();
             string cuisine = input.Split("near")[0];
             string address = input.Split("near")[1];
-            string geocodingResStr = await client.GetStringAsync($"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=AIzaSyB3xAwIClwYsld-s_JWLBXxBYoXcvrnKlM");
+            string geocodingResStr = await client.GetStringAsync($"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key=<yourApiKey>");
             var geocodingRes = JsonConvert.DeserializeObject<GeocodingResponse>(geocodingResStr);
 
-            string placesResStr = await client.GetStringAsync($"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={geocodingRes.results[0].geometry.location.lat}, {geocodingRes.results[0].geometry.location.lng}&radius=1500&type=restaurant&keyword={cuisine}&key=AIzaSyB3xAwIClwYsld-s_JWLBXxBYoXcvrnKlM");
+            string placesResStr = await client.GetStringAsync($"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={geocodingRes.results[0].geometry.location.lat}, {geocodingRes.results[0].geometry.location.lng}&radius=1500&type=restaurant&keyword={cuisine}&key=<yourApiKey>");
             var placesRes = JsonConvert.DeserializeObject<PlacesResponse>(placesResStr);
 
-            foreach(var place in placesRes.results)
+            foreach (var place in placesRes.results)
             {
-                if(place.opening_hours != null && place.opening_hours.open_now)
+                if (place.opening_hours != null && place.opening_hours.open_now)
                 {
                     Console.WriteLine(place.name);
                 }
