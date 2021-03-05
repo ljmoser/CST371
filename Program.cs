@@ -32,7 +32,16 @@ namespace CST371
             IGoogleApiClient client= new GoogleApiClientFake();
             var placesRes = await client.GetFoodNearAddress(a.Cuisine, a.Address);
             
-            IFormatter formatter = new NaturalFormatter();
+            IFormatter formatter;
+            if(a.Format == "CSV")
+                formatter = new CsvFormatter();
+            else if (a.Format == "Natural")
+                formatter = new NaturalFormatter();
+            else if (a.Format == "JSON")
+                formatter = new JsonFormatter();
+            else 
+                throw new NotImplementedException($"Format {a.Format} specified but no implementation found");
+
             string formattedResults = formatter.Format(placesRes);
 
             Console.WriteLine(formattedResults);
