@@ -6,7 +6,6 @@ namespace CST371.GoogleApi
     {
         public async Task<PlacesResponse> GetFoodNearAddress(string cuisine, string address)
         {
-
             return new PlacesResponse()
             {
                 results = new PlacesResult[]{
@@ -16,7 +15,5 @@ namespace CST371.GoogleApi
                 }
             };
         }
-
     }
-
 }

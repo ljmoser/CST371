@@ -8,6 +8,6 @@ namespace CST371.ResultFormatters
         public string Format(PlacesResponse response)
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(response.results);
-        } 
+        }
     }
 }

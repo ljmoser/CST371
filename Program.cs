@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using CST371.GoogleApi;
 using CST371.ResultFormatters;
+using Microsoft.Extensions.Configuration;
 
 namespace CST371
 {
@@ -12,10 +13,9 @@ namespace CST371
         public string Format {get;set;}
     }
 
-    class Program
+    public static class Program
     {
-
-        static Args ParseArgs(string[] args)
+        private static Args ParseArgs(string[] args)
         {
             string query = args[0];
             return new Args(){
@@ -25,13 +25,17 @@ namespace CST371
             };
         }
 
-        static async Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Args a = ParseArgs(args);
 
-            IGoogleApiClient client= new GoogleApiClientFake();
-            var placesRes = await client.GetFoodNearAddress(a.Cuisine, a.Address);
-            
+            IConfiguration config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true, true)
+                .Build();
+
+            IGoogleApiClient client= new GoogleApiClientComposed(config["apikey"]);
+            var placesRes = await client.GetFoodNearAddress(a.Cuisine, a.Address).ConfigureAwait(false);
+
             IFormatter formatter;
             if(a.Format == "CSV")
                 formatter = new CsvFormatter();
@@ -39,7 +43,7 @@ namespace CST371
                 formatter = new NaturalFormatter();
             else if (a.Format == "JSON")
                 formatter = new JsonFormatter();
-            else 
+            else
                 throw new NotImplementedException($"Format {a.Format} specified but no implementation found");
 
             string formattedResults = formatter.Format(placesRes);

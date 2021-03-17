@@ -7,9 +7,9 @@ namespace CST371.ResultFormatters
     {
         public string Format(PlacesResponse response)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
 
-            stringBuilder.AppendLine($"name, rating, is_open_now");
+            stringBuilder.AppendLine("name, rating, is_open_now");
 
             foreach(var res in response.results)
             {
@@ -17,9 +17,6 @@ namespace CST371.ResultFormatters
             }
 
             return stringBuilder.ToString();
-
-        } 
-
+        }
     }
-
 }
