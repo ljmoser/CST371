@@ -35,8 +35,6 @@ namespace CST371.GoogleApi
 
         public double rating {get;set;}
 
-        public int user_ratings_total {get;set;}
-        
         public string vicinity {get;set;}
 
     }
