@@ -28,11 +28,11 @@ namespace CST371
 
         public static IFormatter GetFormatter(Args a, string defaultFormat)
         {
-            string format = a.Format??defaultFormat;
+            string format = (a.Format??defaultFormat).ToUpper();
 
             if (format == "CSV")
                 return new CsvFormatter();
-            else if (format == "Natural")
+            else if (format == "NATURAL")
                 return new NaturalFormatter();
             else if (format == "JSON")
                 return new JsonFormatter();
