@@ -14,10 +14,10 @@ namespace RestaurantFinderWeb.Controllers
     [Route("[controller]")]
     public class RestaurantFinderController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<RestaurantFinderController> _logger;
         private readonly IConfiguration _config;
 
-        public RestaurantFinderController(ILogger<WeatherForecastController> logger, IConfiguration config)
+        public RestaurantFinderController(ILogger<RestaurantFinderController> logger, IConfiguration config)
         {
             _logger = logger;
             _config = config;
