@@ -24,10 +24,14 @@ namespace RestaurantFinderWeb.Controllers
         }
 
         [HttpGet("/restaurants/")]
-        public async Task<PlacesResponse> Get([FromQuery] string address, [FromQuery] string cuisine)
+        public async Task<PlacesResponse> Get([FromQuery] string address, [FromQuery] string cuisine, [FromQuery] string name, [FromQuery] double? rating, [FromQuery] bool? isOpen)
         {
-            IGoogleApiClient client= new GoogleApiClientComposed(_config["apikey"]);
-            return await client.GetFoodNearAddress(cuisine, address);
+            IGoogleApiClient client= new GoogleApiClientFake();
+            var resultsPriorToFilter = await client.GetFoodNearAddress(cuisine, address);
+            var filter = new ResultFilter();
+            var resultsAfterFitler = filter.FilterResults(resultsPriorToFilter, isOpen, name, rating);
+            return resultsAfterFitler;
+            
         }
     }
 }
